@@ -1,7 +1,14 @@
+#! /usr/bin/python
+
 import requests
 from bs4 import BeautifulSoup
 
-page = requests.get('http://www.math.wpi.edu/Course_Materials/MA2071C16/Hw/hw2.html')
+pages = requests.get('http://www.math.wpi.edu/Course_Materials/MA2071C16/Hw/hwk.html')
+
+soup = BeautifulSoup(pages.text,'html.parser')
+current_hw_num = len(soup.findAll('a'))-1
+
+page = requests.get('http://www.math.wpi.edu/Course_Materials/MA2071C16/Hw/hw'+str(current_hw_num)+'.html')
 soup = BeautifulSoup(page.text,'html.parser')
 lines = soup.find('pre').text.split('\n')
 
